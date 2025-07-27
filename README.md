@@ -33,6 +33,7 @@ npm run dev
 6. Edit/Delete Functionality
 
 ##Deployment
+https://profile-management-app-livid.vercel.app/
 
 
 
