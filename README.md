@@ -2,9 +2,12 @@
 
 A React + TypeScript app to manage user profiles with form validation, Redux Toolkit, API integration, routing, and local storage sync.
 
-## Installation & Setup
+---
+
+## 🚀 Installation & Setup
 
 1. **Clone the repository**
+```bash
 git clone https://github.com/lavanya-1234567/profile-management-app.git
 cd profile-management-app
 
