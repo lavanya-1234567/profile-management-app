@@ -22,15 +22,10 @@ A React + TypeScript app to manage user profiles with form validation, Redux Too
 ---
 ## Features
 Form Validation using MUI
-
 Redux Toolkit for state management
-
 API integration and error handling
-
 LocalStorage persistence
-
 Routing with a custom 404 (NotFound) page
-
 Edit and Delete Functionality
 ---
 ## Deployment
