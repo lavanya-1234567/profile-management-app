@@ -31,7 +31,7 @@ LocalStorage persistence
 
 Routing with a custom 404 (NotFound) page
 
-Edit and Delete functionality
+Edit and Delete Functionality
 ---
 ## Deployment
 Live App: https://profile-management-app-livid.vercel.app/
