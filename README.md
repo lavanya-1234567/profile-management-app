@@ -7,36 +7,42 @@ A React + TypeScript app to manage user profiles with form validation, Redux Too
 ## 🚀 Installation & Setup
 
 1. **Clone the repository**
-git clone https://github.com/lavanya-1234567/profile-management-app.git
-cd profile-management-app
+   ```bash
+   git clone https://github.com/lavanya-1234567/profile-management-app.git
+   cd profile-management-app
+Install dependencies
 
-
-2. **Install dependencies**
+bash
+Copy
+Edit
 npm install
-
-3. **Add environment variables**
+Add environment variables
 Create a .env file in the root and add:
+
+ini
+Copy
+Edit
 VITE_API_URL_DEV=http://localhost:3000
 VITE_API_URL_PROD=https://your-production-api.com
+Run the app in development
 
-4. **Run the app in development**
+bash
+Copy
+Edit
 npm run dev
----
-##Features
-1. Form Validation (MUI)
+✨ Features
+Form Validation using MUI
 
-2. Redux Toolkit for state management
+Redux Toolkit for state management
 
-3. API management and error handling 
+API integration and error handling
 
-4. LocalStorage Persistence
+LocalStorage persistence
 
-5. Routing with NotFound (404) page
+Routing with a custom 404 (NotFound) page
 
-6. Edit/Delete Functionality
----
-##Deployment
-https://profile-management-app-livid.vercel.app/
+Edit and Delete functionality
 
-
+Deployment
+Live App: https://profile-management-app-livid.vercel.app/
 
