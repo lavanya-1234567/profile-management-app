@@ -1,29 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Profile } from '../types/profile';
 
 interface ProfileState {
-  firstName: string;
-  lastName: string;
-  email: string;
-  age?: number;
+  profile: Profile | null;
+  error: string | null;
 }
 
 const initialState: ProfileState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  age: undefined,
+  profile: null,
+  error: null,
 };
 
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    setProfile: (state, action: PayloadAction<ProfileState>) => {
-      return { ...action.payload };
+    setProfile: (state, action: PayloadAction<Profile>) => {
+      state.profile = action.payload;
+      state.error = null;
     },
-    clearProfile: () => initialState,
+    clearProfile: (state) => {
+      state.profile = null;
+      state.error = null;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setProfile, clearProfile } = profileSlice.actions;
+export const { setProfile, clearProfile, setError } = profileSlice.actions;
 export default profileSlice.reducer;

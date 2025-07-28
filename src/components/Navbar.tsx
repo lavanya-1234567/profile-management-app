@@ -1,24 +1,27 @@
-
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
-const Navbar = () => {
-  const profile = useSelector((state: RootState) => state.profile);
-  const fullName = profile.firstName || profile.lastName
-    ? `${profile.firstName} ${profile.lastName}`
-    : '';
+const Navbar: React.FC = () => {
+  const profile = useSelector((state: RootState) => state.profile.profile);
+
+  const fullName = (() => {
+    const first = profile?.firstName?.trim();
+    const last = profile?.lastName?.trim();
+
+    if (first && last) return `${first} ${last}`;
+    if (first) return first;
+    if (last) return last;
+    return 'Guest';
+  })();
 
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Profile Manager
+          Profile App - {fullName}
         </Typography>
-        {fullName && (
-          <Typography variant="subtitle1">{fullName}</Typography>
-        )}
       </Toolbar>
     </AppBar>
   );

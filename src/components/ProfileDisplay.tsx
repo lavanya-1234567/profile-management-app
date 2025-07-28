@@ -1,62 +1,86 @@
-import React from 'react';
-import {
-  Container,
-  Typography,
-  Paper,
-  Box,
-  Alert,
-  Button,
-} from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState, AppDispatch } from '../redux/store';
-import { setProfile } from '../redux/profileSlice';
+import { Alert, Typography, Box, Paper, Button, Stack } from '@mui/material';
+import { deleteProfileFromAPI } from '../utils/api';
+import { clearProfile } from '../redux/profileSlice';
 
-const ProfileDisplay = () => {
+const ProfileDisplay: React.FC = () => {
+  const profile = useSelector((state: RootState) => state.profile.profile);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const profile = useSelector((state: RootState) => state.profile);
+
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const handleEdit = () => {
-    navigate('/profile-form');
+    navigate('/profile-form/edit');
   };
 
-  const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete your profile?')) {
+  const handleDelete = async () => {
+    if (!profile?.id) {
+      setDeleteError('Invalid profile ID');
+      return;
+    }
+
+    try {
+      await deleteProfileFromAPI(profile.id);
+      dispatch(clearProfile());
       localStorage.removeItem('profile');
-      dispatch(setProfile({ firstName: '', lastName: '', email: '', age: undefined }));
-      navigate('/profile-form');
+      setDeleteSuccess(true);
+
+      setTimeout(() => {
+        setDeleteSuccess(false);
+        navigate('/profile-form');
+      }, 1000);
+    } catch (error) {
+      setDeleteError('Failed to delete profile. Please try again.');
+      console.error(error);
     }
   };
 
-  return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>Profile Details</Typography>
-      {profile.firstName ? (
-        <Paper elevation={3} sx={{ padding: 3 }}>
-          <Box>
-            <Typography variant="subtitle1"><strong>First Name:</strong> {profile.firstName}</Typography>
-            <Typography variant="subtitle1"><strong>Last Name:</strong> {profile.lastName}</Typography>
-            <Typography variant="subtitle1"><strong>Email:</strong> {profile.email}</Typography>
-            {profile.age !== undefined && (
-              <Typography variant="subtitle1"><strong>Age:</strong> {profile.age}</Typography>
-            )}
-          </Box>
+  if (!profile) {
+    return (
+      <Alert severity="info" sx={{ mt: 4 }}>
+        No profile found. Please create one.
+      </Alert>
+    );
+  }
 
-          
-          <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
-            <Button variant="contained" color="primary" onClick={handleEdit}>
-              Edit
-            </Button>
-            <Button variant="outlined" color="error" onClick={handleDelete}>
-              Delete
-            </Button>
-          </Box>
-        </Paper>
-      ) : (
-        <Alert severity="info">No profile found. Please submit the form first.</Alert>
+  return (
+    <Paper elevation={3} sx={{ mt: 4, p: 3 }}>
+      <Typography variant="h6" gutterBottom>
+        Name: {profile.firstName} {profile.lastName}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Email: {profile.email}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Age: {profile.age}
+      </Typography>
+
+      {deleteSuccess && (
+        <Alert severity="success" sx={{ mt: 2 }}>
+          Profile deleted successfully!
+        </Alert>
       )}
-    </Container>
+
+      {deleteError && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {deleteError}
+        </Alert>
+      )}
+
+      <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
+        <Button variant="outlined" color="primary" onClick={handleEdit}>
+          Edit
+        </Button>
+        <Button variant="outlined" color="error" onClick={handleDelete}>
+          Delete
+        </Button>
+      </Stack>
+    </Paper>
   );
 };
 
