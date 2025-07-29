@@ -3,5 +3,5 @@ export interface Profile {
   firstName: string;
   lastName: string;
   email: string;
-  age: number | string; 
+  age?: string | number; // <-- allow optional
 }

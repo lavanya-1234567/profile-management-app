@@ -1,27 +1,24 @@
 import axios from 'axios';
 import { Profile } from '../types/profile';
 
-const API_BASE_URL = 'https://6887344d071f195ca97fba2d.mockapi.io/profiles';
+// ✅ Fix for Vite's import.meta.env typing
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL!;
 
-export const fetchProfiles = async (): Promise<Profile[]> => {
-  const response = await axios.get<Profile[]>(API_BASE_URL);
-  return response.data;
+
+// ✅ Create Profile
+export const createProfileInAPI = async (data: Profile): Promise<Profile> => {
+  const res = await axios.post(API_BASE_URL, data);
+  return res.data;
 };
 
-export const saveProfileToAPI = async (profile: Profile): Promise<Profile> => {
-  const response = await axios.post<Profile>(API_BASE_URL, profile);
-  return response.data;
+// ✅ Update Profile (refactored to accept Profile object only)
+export const updateProfileInAPI = async (data: Profile): Promise<Profile> => {
+  if (!data.id) throw new Error('Profile ID is required to update');
+  const res = await axios.put(`${API_BASE_URL}/${data.id}`, data);
+  return res.data;
 };
 
-export const updateProfileInAPI = async (
-  id: string,
-  profile: Profile
-): Promise<Profile> => {
-  const response = await axios.put<Profile>(`${API_BASE_URL}/${id}`, profile);
-  return response.data;
-};
-
+// ✅ Delete Profile
 export const deleteProfileFromAPI = async (id: string): Promise<void> => {
   await axios.delete(`${API_BASE_URL}/${id}`);
 };
-

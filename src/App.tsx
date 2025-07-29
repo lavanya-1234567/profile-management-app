@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setProfile } from './redux/profileSlice';
 import { AppDispatch } from './redux/store';
 import { Profile } from './types/profile';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,9 +27,11 @@ const App: React.FC = () => {
   return (
     <>
       <Navbar />
-      <Box sx={{ p: 2 }}>
-        <AppRoutes />
-      </Box>
+      <Container maxWidth="md">
+        <Box sx={{ mt: 4, mb: 6, p: { xs: 2, sm: 3 }, bgcolor: '#fafafa', borderRadius: 3, boxShadow: 3 }}>
+          <AppRoutes />
+        </Box>
+      </Container>
     </>
   );
 };

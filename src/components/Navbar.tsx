@@ -1,26 +1,32 @@
+
 import React from 'react';
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 const Navbar: React.FC = () => {
   const profile = useSelector((state: RootState) => state.profile.profile);
 
-  const fullName = (() => {
-    const first = profile?.firstName?.trim();
-    const last = profile?.lastName?.trim();
-
-    if (first && last) return `${first} ${last}`;
-    if (first) return first;
-    if (last) return last;
-    return 'Guest';
-  })();
+  const fullName =
+    profile && (profile.firstName || profile.lastName)
+      ? `${profile.firstName?.trim() || ''} ${profile.lastName?.trim() || ''}`.trim()
+      : 'Guest';
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Profile App - {fullName}
+    <AppBar
+      position="static"
+      sx={{
+        background: 'linear-gradient(to right, #1976d2, #42a5f5)',
+        boxShadow: 3,
+      }}
+    >
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', px: 2 }}>
+        <Typography variant="h6" sx={{ fontWeight: 600, color: 'white' }}>
+          Profile Management App
+        </Typography>
+
+        <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 500 }}>
+          Welcome, {fullName}
         </Typography>
       </Toolbar>
     </AppBar>

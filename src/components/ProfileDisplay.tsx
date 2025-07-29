@@ -2,41 +2,39 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState, AppDispatch } from '../redux/store';
-import { Alert, Typography, Box, Paper, Button, Stack } from '@mui/material';
-import { deleteProfileFromAPI } from '../utils/api';
-import { clearProfile } from '../redux/profileSlice';
+import {
+  Alert,
+  Typography,
+  Paper,
+  Button,
+  Stack,
+  Box,
+  Divider,
+} from '@mui/material';
+import { clearProfile, deleteProfileThunk } from '../redux/profileSlice';
 
 const ProfileDisplay: React.FC = () => {
   const profile = useSelector((state: RootState) => state.profile.profile);
+  const error = useSelector((state: RootState) => state.profile.error);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  const handleEdit = () => {
-    navigate('/profile-form/edit');
-  };
+  const handleEdit = () => navigate('/profile-form/edit');
 
   const handleDelete = async () => {
-    if (!profile?.id) {
-      setDeleteError('Invalid profile ID');
-      return;
-    }
+    if (!profile?.id) return;
 
-    try {
-      await deleteProfileFromAPI(profile.id);
-      dispatch(clearProfile());
+    const result = await dispatch(deleteProfileThunk(profile.id));
+    if (deleteProfileThunk.fulfilled.match(result)) {
       localStorage.removeItem('profile');
+      dispatch(clearProfile());
       setDeleteSuccess(true);
-
       setTimeout(() => {
         setDeleteSuccess(false);
         navigate('/profile-form');
       }, 1000);
-    } catch (error) {
-      setDeleteError('Failed to delete profile. Please try again.');
-      console.error(error);
     }
   };
 
@@ -49,34 +47,65 @@ const ProfileDisplay: React.FC = () => {
   }
 
   return (
-    <Paper elevation={3} sx={{ mt: 4, p: 3 }}>
-      <Typography variant="h6" gutterBottom>
-        Name: {profile.firstName} {profile.lastName}
+    <Paper
+      elevation={4}
+      sx={{
+        mt: 6,
+        p: 4,
+        maxWidth: 500,
+        mx: 'auto',
+        borderRadius: 3,
+        bgcolor: '#f9f9f9',
+      }}
+    >
+      <Typography variant="h5" fontWeight={600} textAlign="center" gutterBottom>
+        Profile Details
       </Typography>
-      <Typography variant="body1" gutterBottom>
-        Email: {profile.email}
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        Age: {profile.age}
-      </Typography>
+      <Divider sx={{ my: 2 }} />
+
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="subtitle1" fontWeight={500}>
+          Name:
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          {profile.firstName} {profile.lastName}
+        </Typography>
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="subtitle1" fontWeight={500}>
+          Email:
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          {profile.email}
+        </Typography>
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="subtitle1" fontWeight={500}>
+          Age:
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          {profile.age}
+        </Typography>
+      </Box>
 
       {deleteSuccess && (
         <Alert severity="success" sx={{ mt: 2 }}>
           Profile deleted successfully!
         </Alert>
       )}
-
-      {deleteError && (
+      {error && (
         <Alert severity="error" sx={{ mt: 2 }}>
-          {deleteError}
+          {error}
         </Alert>
       )}
 
-      <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
-        <Button variant="outlined" color="primary" onClick={handleEdit}>
+      <Stack direction="row" spacing={2} justifyContent="center" sx={{ mt: 4 }}>
+        <Button variant="contained" color="primary" onClick={handleEdit}>
           Edit
         </Button>
-        <Button variant="outlined" color="error" onClick={handleDelete}>
+        <Button variant="contained" color="error" onClick={handleDelete}>
           Delete
         </Button>
       </Stack>
