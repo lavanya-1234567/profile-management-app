@@ -1,6 +1,6 @@
 # Profile Management App
 
-A React + TypeScript app to manage user profiles with form validation, Redux Toolkit, API integration, routing, and local storage sync.
+A Profile Management App built with React, TypeScript, Redux Toolkit, Redux Thunk, React Router, Material UI, and MockAPI, deployed on Vercel.
 
 ## Installation & Setup
 
@@ -21,17 +21,23 @@ A React + TypeScript app to manage user profiles with form validation, Redux Too
    npm run dev
 ---
 ## Features
-Form Validation using MUI
+Create, Update, Delete user profiles
 
-Redux Toolkit for state management
+Form Validation using TypeScript
 
-API integration and error handling
+Routing with React Router (/profile, /profile-form, /404)
+
+Redux Toolkit + Redux Thunk for state and API management
+
+API integration using MockAPI
 
 LocalStorage persistence
 
-Routing with a custom 404 (NotFound) page
+Environment variable-based API config
 
-Edit and Delete Functionality
+Fully responsive and styled using MUI
+
+404 Not Found handling
 
 ---
 ## Deployment
