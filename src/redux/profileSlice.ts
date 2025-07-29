@@ -16,12 +16,10 @@ const initialState: ProfileState = {
   error: null,
 };
 
-// --- Helper for extracting error message ---
 const getErrorMessage = (error: unknown): string => {
   return error instanceof Error ? error.message : 'Something went wrong';
 };
 
-// --- Thunks ---
 export const createProfileThunk = createAsyncThunk(
   'profile/create',
   async (profileData: Profile, { rejectWithValue }) => {
@@ -56,7 +54,6 @@ export const deleteProfileThunk = createAsyncThunk(
   }
 );
 
-// --- Slice ---
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
@@ -101,6 +98,5 @@ const profileSlice = createSlice({
   },
 });
 
-// --- Exports ---
 export const { setProfile, clearProfile, setError } = profileSlice.actions;
 export default profileSlice.reducer;
