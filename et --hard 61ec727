@@ -1,0 +1,17 @@
+[33m4e6611f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Profile Management App: added form, redux, routing, and validation
+[33m61ec727[m Final  Validation
+[33m812ade0[m Update README.md
+[33m472e2fe[m Implemented validation, Redux Thunk, edit/delete, routing, localStorage, env setup
+[33m4800412[m Updated profile management app with final features and bug fixes
+[33m45eb52d[m Update README.md
+[33me74a6a9[m Update README.md
+[33m4effd49[m Update README.md
+[33m345342b[m Update README.md
+[33mf19370c[m Update README.md
+[33mef9f8ac[m Update README.md
+[33mde7b08e[m Update README.md
+[33me6688f5[m Update README.md
+[33m1d3c130[m Update README.md
+[33m3db02b4[m Update README.md
+[33m68fd337[m Initial commit - profile management app
+[33m82c2f27[m Initialize project using Create React App

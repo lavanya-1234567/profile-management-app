@@ -4,7 +4,6 @@ import {
   Button,
   Container,
   Typography,
-  Box,
   Alert,
   Paper,
 } from '@mui/material';
@@ -117,9 +116,25 @@ const ProfileForm: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 6 }}>
-      <Paper elevation={4} sx={{ p: 4, borderRadius: 3 }}>
-        <Typography variant="h5" align="center" fontWeight={600} gutterBottom>
+    <Container maxWidth="sm" sx={{ mt: 8 }}>
+      <Paper
+        elevation={6}
+        sx={{
+          p: 5,
+          borderRadius: 4,
+          background: 'linear-gradient(145deg, #ffffff, #f3f6f9)',
+        }}
+      >
+        <Typography
+          variant="h5"
+          align="center"
+          fontWeight={700}
+          gutterBottom
+          sx={{
+            color: editMode ? '#ff9800' : '#1976d2',
+            mb: 3,
+          }}
+        >
           {editMode ? 'Edit Profile' : 'Create Your Profile'}
         </Typography>
 
@@ -132,6 +147,7 @@ const ProfileForm: React.FC = () => {
             onChange={handleChange}
             required
             margin="normal"
+            sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
           <TextField
             fullWidth
@@ -141,6 +157,7 @@ const ProfileForm: React.FC = () => {
             onChange={handleChange}
             required
             margin="normal"
+            sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
           <TextField
             fullWidth
@@ -151,6 +168,7 @@ const ProfileForm: React.FC = () => {
             onChange={handleChange}
             required
             margin="normal"
+            sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
           <TextField
             fullWidth
@@ -161,17 +179,41 @@ const ProfileForm: React.FC = () => {
             onChange={handleChange}
             inputProps={{ min: 0 }}
             margin="normal"
+            sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
 
-          {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
-          {success && <Alert severity="success" sx={{ mt: 2 }}>{success}</Alert>}
+          {/* Alerts */}
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
+          {success && (
+            <Alert severity="success" sx={{ mt: 2 }}>
+              {success}
+            </Alert>
+          )}
 
           <Button
             variant="contained"
-            color="primary"
             type="submit"
             fullWidth
-            sx={{ mt: 3, py: 1.5 }}
+            sx={{
+              mt: 4,
+              py: 1.5,
+              fontWeight: 600,
+              fontSize: '1rem',
+              borderRadius: 3,
+              textTransform: 'none',
+              background: editMode
+                ? 'linear-gradient(to right, #ff9800, #f57c00)'
+                : 'linear-gradient(to right, #1976d2, #42a5f5)',
+              '&:hover': {
+                background: editMode
+                  ? 'linear-gradient(to right, #f57c00, #ef6c00)'
+                  : 'linear-gradient(to right, #1565c0, #1976d2)',
+              },
+            }}
             disabled={loading}
           >
             {loading

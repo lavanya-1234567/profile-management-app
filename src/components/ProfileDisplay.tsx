@@ -10,6 +10,7 @@ import {
   Stack,
   Box,
   Divider,
+  Avatar,
 } from '@mui/material';
 import { clearProfile, deleteProfileThunk } from '../redux/profileSlice';
 
@@ -40,7 +41,7 @@ const ProfileDisplay: React.FC = () => {
 
   if (!profile) {
     return (
-      <Alert severity="info" sx={{ mt: 4 }}>
+      <Alert severity="info" sx={{ mt: 6, maxWidth: 500, mx: 'auto' }}>
         No profile found. Please create one.
       </Alert>
     );
@@ -48,24 +49,42 @@ const ProfileDisplay: React.FC = () => {
 
   return (
     <Paper
-      elevation={4}
+      elevation={5}
       sx={{
         mt: 6,
-        p: 4,
-        maxWidth: 500,
+        p: 5,
+        maxWidth: 550,
         mx: 'auto',
-        borderRadius: 3,
-        bgcolor: '#f9f9f9',
+        borderRadius: 4,
+        bgcolor: 'white',
+        textAlign: 'center',
       }}
     >
-      <Typography variant="h5" fontWeight={600} textAlign="center" gutterBottom>
+      {/* Profile Avatar */}
+      <Avatar
+        sx={{
+          bgcolor: '#1976d2',
+          width: 80,
+          height: 80,
+          fontSize: '2rem',
+          fontWeight: 600,
+          mb: 2,
+          mx: 'auto',
+        }}
+      >
+        {profile.firstName?.charAt(0).toUpperCase()}
+      </Avatar>
+
+      {/* Title */}
+      <Typography variant="h5" fontWeight={700} gutterBottom>
         Profile Details
       </Typography>
       <Divider sx={{ my: 2 }} />
 
+      {/* Profile Fields */}
       <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle1" fontWeight={500}>
-          Name:
+        <Typography variant="subtitle1" fontWeight={600}>
+          Name
         </Typography>
         <Typography variant="body1" color="text.secondary">
           {profile.firstName} {profile.lastName}
@@ -73,8 +92,8 @@ const ProfileDisplay: React.FC = () => {
       </Box>
 
       <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle1" fontWeight={500}>
-          Email:
+        <Typography variant="subtitle1" fontWeight={600}>
+          Email
         </Typography>
         <Typography variant="body1" color="text.secondary">
           {profile.email}
@@ -82,14 +101,15 @@ const ProfileDisplay: React.FC = () => {
       </Box>
 
       <Box sx={{ mb: 2 }}>
-        <Typography variant="subtitle1" fontWeight={500}>
-          Age:
+        <Typography variant="subtitle1" fontWeight={600}>
+          Age
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {profile.age}
+          {profile.age || 'N/A'}
         </Typography>
       </Box>
 
+      {/* Alerts */}
       {deleteSuccess && (
         <Alert severity="success" sx={{ mt: 2 }}>
           Profile deleted successfully!
@@ -101,11 +121,22 @@ const ProfileDisplay: React.FC = () => {
         </Alert>
       )}
 
-      <Stack direction="row" spacing={2} justifyContent="center" sx={{ mt: 4 }}>
-        <Button variant="contained" color="primary" onClick={handleEdit}>
+      {/* Action Buttons */}
+      <Stack direction="row" spacing={3} justifyContent="center" sx={{ mt: 4 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleEdit}
+          sx={{ px: 4, borderRadius: 2 }}
+        >
           Edit
         </Button>
-        <Button variant="contained" color="error" onClick={handleDelete}>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={handleDelete}
+          sx={{ px: 4, borderRadius: 2 }}
+        >
           Delete
         </Button>
       </Stack>
