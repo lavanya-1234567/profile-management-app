@@ -60,7 +60,6 @@ const ProfileDisplay: React.FC = () => {
         textAlign: 'center',
       }}
     >
-      {/* Profile Avatar */}
       <Avatar
         sx={{
           bgcolor: '#1976d2',
@@ -74,14 +73,10 @@ const ProfileDisplay: React.FC = () => {
       >
         {profile.firstName?.charAt(0).toUpperCase()}
       </Avatar>
-
-      {/* Title */}
       <Typography variant="h5" fontWeight={700} gutterBottom>
         Profile Details
       </Typography>
       <Divider sx={{ my: 2 }} />
-
-      {/* Profile Fields */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="subtitle1" fontWeight={600}>
           Name
@@ -108,8 +103,6 @@ const ProfileDisplay: React.FC = () => {
           {profile.age || 'N/A'}
         </Typography>
       </Box>
-
-      {/* Alerts */}
       {deleteSuccess && (
         <Alert severity="success" sx={{ mt: 2 }}>
           Profile deleted successfully!
@@ -120,8 +113,6 @@ const ProfileDisplay: React.FC = () => {
           {error}
         </Alert>
       )}
-
-      {/* Action Buttons */}
       <Stack direction="row" spacing={3} justifyContent="center" sx={{ mt: 4 }}>
         <Button
           variant="contained"

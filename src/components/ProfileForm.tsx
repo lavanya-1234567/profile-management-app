@@ -116,23 +116,23 @@ const ProfileForm: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
+    <Container maxWidth="sm" sx={{ mt: 6 }}>
       <Paper
-        elevation={6}
+        elevation={3}
         sx={{
-          p: 5,
-          borderRadius: 4,
-          background: 'linear-gradient(145deg, #ffffff, #f3f6f9)',
+          p: 3, 
+          borderRadius: 2,
+          background: 'linear-gradient(145deg, #dbcacaff, #f9fbfc)',
         }}
       >
         <Typography
-          variant="h5"
+          variant="h6"
           align="center"
-          fontWeight={700}
+          fontWeight={600}
           gutterBottom
           sx={{
             color: editMode ? '#ff9800' : '#1976d2',
-            mb: 3,
+            mb: 2,
           }}
         >
           {editMode ? 'Edit Profile' : 'Create Your Profile'}
@@ -146,7 +146,7 @@ const ProfileForm: React.FC = () => {
             value={formData.firstName}
             onChange={handleChange}
             required
-            margin="normal"
+            margin="dense" 
             sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
           <TextField
@@ -156,7 +156,7 @@ const ProfileForm: React.FC = () => {
             value={formData.lastName}
             onChange={handleChange}
             required
-            margin="normal"
+            margin="dense"
             sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
           <TextField
@@ -167,7 +167,7 @@ const ProfileForm: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            margin="normal"
+            margin="dense"
             sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
           <TextField
@@ -178,11 +178,10 @@ const ProfileForm: React.FC = () => {
             value={formData.age}
             onChange={handleChange}
             inputProps={{ min: 0 }}
-            margin="normal"
+            margin="dense"
             sx={{ bgcolor: 'white', borderRadius: 1 }}
           />
 
-          {/* Alerts */}
           {error && (
             <Alert severity="error" sx={{ mt: 2 }}>
               {error}
@@ -199,11 +198,11 @@ const ProfileForm: React.FC = () => {
             type="submit"
             fullWidth
             sx={{
-              mt: 4,
-              py: 1.5,
+              mt: 3,
+              py: 1.2,
               fontWeight: 600,
               fontSize: '1rem',
-              borderRadius: 3,
+              borderRadius: 2,
               textTransform: 'none',
               background: editMode
                 ? 'linear-gradient(to right, #ff9800, #f57c00)'
