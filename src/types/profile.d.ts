@@ -3,5 +3,5 @@ export interface Profile {
   firstName: string;
   lastName: string;
   email: string;
-  age?: string | number; 
+  age?: string | number | null; 
 }

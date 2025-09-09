@@ -83,7 +83,7 @@ const ProfileForm: React.FC = () => {
       let savedProfile: Profile;
       const finalFormData: Profile = {
         ...formData,
-        age: formData.age !== "" ? Number(formData.age) : undefined,
+        age: formData.age !== "" ? Number(formData.age) : null,
       };
 
       if (editMode && formData.id) {
