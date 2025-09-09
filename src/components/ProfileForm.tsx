@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -6,27 +6,26 @@ import {
   Typography,
   Alert,
   Paper,
-} from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { AppDispatch, RootState } from '../redux/store';
-import { setProfile } from '../redux/profileSlice';
-import { createProfileThunk, updateProfileThunk } from '../redux/profileSlice';
-import { Profile } from '../types/profile';
+import { AppDispatch, RootState } from "../redux/store";
+import { setProfile, createProfileThunk, updateProfileThunk } from "../redux/profileSlice";
+import { Profile } from "../types/profile";
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   const navigate = useNavigate();
   const profile = useSelector((state: RootState) => state.profile.profile);
-  const editMode = location.pathname.includes('edit');
+  const editMode = location.pathname.includes("edit");
 
   const [formData, setFormData] = useState<Profile>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    age: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    age: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -37,33 +36,29 @@ const ProfileForm: React.FC = () => {
     if (editMode && profile) {
       setFormData({
         ...profile,
-        age: profile.age?.toString() || '',
+        age: profile.age?.toString() || "",
       });
     }
   }, [editMode, profile]);
 
   const validateForm = (): boolean => {
     if (!formData.firstName.trim() || formData.firstName.trim().length < 3) {
-      setError('First name must be at least 3 characters long.');
+      setError("First name must be at least 3 characters long.");
       return false;
     }
-
     if (!formData.lastName.trim() || formData.lastName.trim().length < 3) {
-      setError('Last name must be at least 3 characters long.');
+      setError("Last name must be at least 3 characters long.");
       return false;
     }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim() || !emailRegex.test(formData.email)) {
-      setError('Please enter a valid email address.');
+      setError("Please enter a valid email address.");
       return false;
     }
-
     if (formData.age && isNaN(Number(formData.age))) {
-      setError('Age must be a valid number if provided.');
+      setError("Age must be a valid number if provided.");
       return false;
     }
-
     setError(null);
     return true;
   };
@@ -88,28 +83,35 @@ const ProfileForm: React.FC = () => {
       let savedProfile: Profile;
       const finalFormData: Profile = {
         ...formData,
-        age: formData.age !== '' ? Number(formData.age) : undefined,
+        age: formData.age !== "" ? Number(formData.age) : undefined,
       };
 
       if (editMode && formData.id) {
         const result = await dispatch(updateProfileThunk(finalFormData));
         if (updateProfileThunk.fulfilled.match(result)) {
           savedProfile = result.payload;
-          setSuccess('Profile updated successfully!');
-        } else throw new Error();
+          setSuccess("Profile updated successfully!");
+        } else {
+          throw new Error(result.payload as string);
+        }
       } else {
         const result = await dispatch(createProfileThunk(finalFormData));
         if (createProfileThunk.fulfilled.match(result)) {
           savedProfile = result.payload;
-          setSuccess('Profile created successfully!');
-        } else throw new Error();
+          setSuccess("Profile created successfully!");
+        } else {
+          throw new Error(result.payload as string);
+        }
       }
 
       dispatch(setProfile(savedProfile));
-      localStorage.setItem('profile', JSON.stringify(savedProfile));
-      navigate('/profile');
-    } catch {
-      setError('Failed to save profile. Please try again.');
+      localStorage.setItem("profile", JSON.stringify(savedProfile));
+      navigate("/profile");
+    } catch (err: any) {
+      console.error("Save profile failed:", err);
+      setError(
+        err?.message || "Failed to save profile. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -120,9 +122,9 @@ const ProfileForm: React.FC = () => {
       <Paper
         elevation={3}
         sx={{
-          p: 3, 
+          p: 3,
           borderRadius: 2,
-          background: 'linear-gradient(145deg, #dbcacaff, #f9fbfc)',
+          background: "linear-gradient(145deg, #dbcacaff, #f9fbfc)",
         }}
       >
         <Typography
@@ -131,11 +133,11 @@ const ProfileForm: React.FC = () => {
           fontWeight={600}
           gutterBottom
           sx={{
-            color: editMode ? '#ff9800' : '#1976d2',
+            color: editMode ? "#ff9800" : "#1976d2",
             mb: 2,
           }}
         >
-          {editMode ? 'Edit Profile' : 'Create Your Profile'}
+          {editMode ? "Edit Profile" : "Create Your Profile"}
         </Typography>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -146,8 +148,8 @@ const ProfileForm: React.FC = () => {
             value={formData.firstName}
             onChange={handleChange}
             required
-            margin="dense" 
-            sx={{ bgcolor: 'white', borderRadius: 1 }}
+            margin="dense"
+            sx={{ bgcolor: "white", borderRadius: 1 }}
           />
           <TextField
             fullWidth
@@ -157,7 +159,7 @@ const ProfileForm: React.FC = () => {
             onChange={handleChange}
             required
             margin="dense"
-            sx={{ bgcolor: 'white', borderRadius: 1 }}
+            sx={{ bgcolor: "white", borderRadius: 1 }}
           />
           <TextField
             fullWidth
@@ -168,7 +170,7 @@ const ProfileForm: React.FC = () => {
             onChange={handleChange}
             required
             margin="dense"
-            sx={{ bgcolor: 'white', borderRadius: 1 }}
+            sx={{ bgcolor: "white", borderRadius: 1 }}
           />
           <TextField
             fullWidth
@@ -179,7 +181,7 @@ const ProfileForm: React.FC = () => {
             onChange={handleChange}
             inputProps={{ min: 0 }}
             margin="dense"
-            sx={{ bgcolor: 'white', borderRadius: 1 }}
+            sx={{ bgcolor: "white", borderRadius: 1 }}
           />
 
           {error && (
@@ -201,27 +203,27 @@ const ProfileForm: React.FC = () => {
               mt: 3,
               py: 1.2,
               fontWeight: 600,
-              fontSize: '1rem',
+              fontSize: "1rem",
               borderRadius: 2,
-              textTransform: 'none',
+              textTransform: "none",
               background: editMode
-                ? 'linear-gradient(to right, #ff9800, #f57c00)'
-                : 'linear-gradient(to right, #1976d2, #42a5f5)',
-              '&:hover': {
+                ? "linear-gradient(to right, #ff9800, #f57c00)"
+                : "linear-gradient(to right, #1976d2, #42a5f5)",
+              "&:hover": {
                 background: editMode
-                  ? 'linear-gradient(to right, #f57c00, #ef6c00)'
-                  : 'linear-gradient(to right, #1565c0, #1976d2)',
+                  ? "linear-gradient(to right, #f57c00, #ef6c00)"
+                  : "linear-gradient(to right, #1565c0, #1976d2)",
               },
             }}
             disabled={loading}
           >
             {loading
               ? editMode
-                ? 'Updating...'
-                : 'Saving...'
+                ? "Updating..."
+                : "Saving..."
               : editMode
-              ? 'Update Profile'
-              : 'Save Profile'}
+              ? "Update Profile"
+              : "Save Profile"}
           </Button>
         </form>
       </Paper>

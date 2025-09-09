@@ -56,7 +56,7 @@ const ProfileDisplay: React.FC = () => {
         maxWidth: 550,
         mx: 'auto',
         borderRadius: 4,
-        bgcolor: 'white',
+        bgcolor: '#eaeef0ff',
         textAlign: 'center',
       }}
     >
